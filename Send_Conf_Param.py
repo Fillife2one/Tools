@@ -18,7 +18,7 @@ binary_message = message.SerializeToString()  # Кодирование в бин
 
 # Использование SSL-сертификата
 ssl_context = ssl.create_default_context()
-ssl_context.load_verify_locations(r'C:\Users\user\PycharmProjects\ConfState\resourse\CA.pem')
+ssl_context.load_verify_locations(r'C:\Users\user\PycharmProjects\Cert\CA.pem')
 
 producer = KafkaProducer(
     bootstrap_servers=['rc1a-790iirs3ofg0goju.mdb.yandexcloud.net:9091'],
