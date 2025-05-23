@@ -4,9 +4,9 @@ import message_pb2
 from kafka import KafkaProducer
 import ssl
 
-load_dotenv()
-KAFKA_USERNAME = os.environ["KAFKA_USERNAME"]
-KAFKA_PASSWORD = os.environ["KAFKA_PASSWORD"]
+#load_dotenv()
+#KAFKA_USERNAME = os.environ["KAFKA_USERNAME"]
+#KAFKA_PASSWORD = os.environ["KAFKA_PASSWORD"]
 
 # Заполняем сообщение
 message = message_pb2.SetNewCustomerConfigurationResponse()
@@ -24,8 +24,8 @@ producer = KafkaProducer(
     bootstrap_servers=['rc1a-790iirs3ofg0goju.mdb.yandexcloud.net:9091'],
     security_protocol='SASL_SSL',
     sasl_mechanism='SCRAM-SHA-512',
-    sasl_plain_username='team-internal-integrations',
-    sasl_plain_password='VndFl2amdLpu65b',
+    sasl_plain_username='', # Получить в Vault
+    sasl_plain_password='', # Получить в Vault
     ssl_context=ssl_context  
 )
 
