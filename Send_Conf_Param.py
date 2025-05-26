@@ -4,28 +4,30 @@ import message_pb2
 from kafka import KafkaProducer
 import ssl
 
-#load_dotenv()
-#KAFKA_USERNAME = os.environ["KAFKA_USERNAME"]
-#KAFKA_PASSWORD = os.environ["KAFKA_PASSWORD"]
+load_dotenv()
+KAFKA_USERNAME = os.environ['KAFKA_USERNAME']
+KAFKA_PASSWORD = os.environ['KAFKA_PASSWORD']
+BROCKER_DEV_TEST=os.environ['BROCKER_DEV_TEST']
 
 # Заполняем сообщение
 message = message_pb2.SetNewCustomerConfigurationResponse()
-message.vehicle_id = "DW8ZZ9NT7B89R7PVG"   # Вин авто
-message.set_customer_configuration_result = 5  # Статус конфигурации авто(Значение от 1 - 11)
-message.aux_data = "ok"  # Комментарий
+message.vehicle_id = "DW8ZZ9NT7B89R7PVG"   # Ввести vin авто
+message.set_customer_configuration_result = 5  # Статус конфигурации авто, значение от 1 - 11
+message.aux_data = "ok"  # Комментарий (опционально)
 
 binary_message = message.SerializeToString()  # Кодирование в бинарный формат
 
 # Использование SSL-сертификата
 ssl_context = ssl.create_default_context()
-ssl_context.load_verify_locations(r'C:\Users\user\PycharmProjects\Cert\CA.pem')
+# Скачать сертификат из инструкции и прописать к нему актуальный путь
+ssl_context.load_verify_locations(r'C:\Users\user\PycharmProjects\ConfState\resourse\CA.pem')
 
 producer = KafkaProducer(
-    bootstrap_servers=['rc1a-790iirs3ofg0goju.mdb.yandexcloud.net:9091'],
+    bootstrap_servers=BROCKER_DEV_TEST, # # Получить в Vault
     security_protocol='SASL_SSL',
     sasl_mechanism='SCRAM-SHA-512',
-    sasl_plain_username='', # Получить в Vault
-    sasl_plain_password='', # Получить в Vault
+    sasl_plain_username=KAFKA_USERNAME, # Получить в Vault
+    sasl_plain_password=KAFKA_PASSWORD, # Получить в Vault
     ssl_context=ssl_context  
 )
 
