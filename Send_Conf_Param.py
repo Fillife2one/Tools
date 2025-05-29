@@ -11,8 +11,8 @@ BROCKER_DEV_TEST=os.environ['BROCKER_DEV_TEST']
 
 # Заполняем сообщение
 message = message_pb2.SetNewCustomerConfigurationResponse()
-message.vehicle_id = "DW8ZZ9NT7B89R7PVG"   # Ввести vin авто
-message.set_customer_configuration_result = 5  # Статус конфигурации авто, значение от 1 - 11
+message.vehicle_id = "1YF93SBJHLYYTCZVL"   # Ввести vin авто
+message.set_customer_configuration_result = 7 # Статус конфигурации авто, значение от 1 - 11
 message.aux_data = "ok"  # Комментарий (опционально)
 
 binary_message = message.SerializeToString()  # Кодирование в бинарный формат
@@ -31,7 +31,7 @@ producer = KafkaProducer(
     ssl_context=ssl_context  
 )
 
-producer.send('external-integrations.config-report-response.dev', value=binary_message) #Название топика
+producer.send('external-integrations.config-report-response.test', value=binary_message) #Название топика
 producer.flush()
 producer.close()
 print("Сообщение отправлено!")
